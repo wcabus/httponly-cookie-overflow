@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>The <code>lang</code> cookie value is: <code>@ViewBag.Lang</code></p>
+    <button id="setCookie" class="btn">Overwrite the cookie</button>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function overflowCookieJar() {
+            // write a bunch of random cookies to the browser to overflow the cookie jar
+            for (let i = 0; i < 700; i++) {
+                document.cookie = `cookie${i}=${i}`;
+            }
+            
+            // clear the cookies again, otherwise the server might throw an error because there are too many cookies
+            for (let i = 0; i < 700; i++) {
+                document.cookie = `cookie${i}=;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+            }
+
+            // set a different value for the lang cookie than the value that's set on the server side
+            document.cookie = 'lang=JavaScript'; 
+            
+            // and reload the page
+            window.location.reload();
+        }
+
+        document.getElementById('setCookie').addEventListener('click', () => overflowCookieJar());
+    </script>
+}
